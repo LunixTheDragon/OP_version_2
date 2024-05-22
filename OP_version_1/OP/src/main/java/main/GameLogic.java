@@ -90,8 +90,8 @@ public class GameLogic {
         for (int i = 0; i < products.size(); i++) {
             Products product = products.get(i);
             product.setY(product.getY() + 2); //falling speed
-            if (product.getPosition() +80 >= 441) {   // they dont have exact right sizes like player so it needs to be slightly lower than for player
-                product.setY(441 - 80);
+            if (product.getPosition() >= 448) {   // they dont have exact right sizes like player so it needs to be slightly lower than for player
+                product.setY(448);
                 products.remove(i);
                 i--; // Adjust the index to account for the removed item
             }
@@ -103,7 +103,7 @@ public class GameLogic {
         float x = rnd.nextInt(gg.getWidth() - 64);//width of product dont forget to change it in GameGraphics
         float y = 0;
         boolean isGood = descriptionOfProduct();
-        BufferedImage productImage = productImages[rnd.nextInt(productImages.length)];
+        BufferedImage productImage = productImages[rnd.nextInt(productImages.length)]; // randomly select productImage
         products.add(new Products(x, y, 64, 80, isGood, isGood ? 0 : 1, productImage));
     }
 }

@@ -107,9 +107,11 @@ public class GameGraphics extends JFrame {
             InputStream is = getClass().getResourceAsStream("/products.photoshop.done.png");
             try {
                 BufferedImage fullImage = ImageIO.read(is);
+                int productWidth = fullImage.getWidth() / 2;
+                int productHeight = fullImage.getHeight();
                 productImages = new BufferedImage[2];
-                productImages[0] = fullImage.getSubimage(0, 0, fullImage.getWidth() / 2, fullImage.getHeight());
-                productImages[1] = fullImage.getSubimage(fullImage.getWidth() / 2, 0, fullImage.getWidth() / 2, fullImage.getHeight());
+                productImages[0] = fullImage.getSubimage(0, 0, productWidth, productHeight);
+                productImages[1] = fullImage.getSubimage(productWidth, 0, productWidth, productHeight);
             }catch (IOException e){
                 e.printStackTrace();
             }finally {
@@ -161,7 +163,7 @@ public class GameGraphics extends JFrame {
             g.drawImage(animations[currentAction.ordinal()][aniIndex], xDelta, yDelta, 128, 80, null);// players size || The ordinal() method in Java is used to get the ordinal value (the position) of an enum constant. Each enum constant has an ordinal value that represents its position in the enum declaration, starting from zero.
             //draw Product
             for(Products product: logic.products){
-                g.drawImage(product.getImage(), (int) product.getX(), (int) product.getY(), product.getWidth() *3, product.getHeight() * 3, null);
+                g.drawImage(product.getImage(), (int) product.getX(), (int) product.getY(), product.getWidth() *4, product.getHeight() * 4, null);
             }
         }
         public BufferedImage[] getProductImages(){
