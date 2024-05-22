@@ -37,14 +37,15 @@ public class GameGraphics extends JFrame {
         });
     }
 
+
     public static class Draw extends JPanel{
         private final GameLogic logic;
         private BufferedImage[][] animations;
         private int aniTick, aniIndex, aniSpeed = 20; //120fpsa /4frames in second == 30
         public int xDelta, yDelta;
-        private BufferedImage playerImg, productImage, backroundImage;
+        private BufferedImage playerImg, backroundImage;
+        private BufferedImage[] productImages;
         private int spriteAm = getSpriteAmount(PlayerValues.IDLE);
-        private String imageData;
 
         public Draw (GameLogic logic){
             this.logic = logic;
@@ -52,7 +53,7 @@ public class GameGraphics extends JFrame {
             yDelta = (int) logic.player.getY();//for the initial spawn point
             importBackroundImg();
             importPlayerImg();
-            importProductImg();
+            importProductImages();
             loadAni();
             setPanelSize();
         }
@@ -102,10 +103,13 @@ public class GameGraphics extends JFrame {
                 }
             }
         }
-        private void importProductImg() {
+        public void importProductImages(){
             InputStream is = getClass().getResourceAsStream("/products.photoshop.done.png");
             try {
-                productImage = ImageIO.read(is);
+                BufferedImage fullImage = ImageIO.read(is);
+                productImages = new BufferedImage[2];
+                productImages[0] = fullImage.getSubimage(0, 0, fullImage.getWidth() / 2, fullImage.getHeight());
+                productImages[1] = fullImage.getSubimage(fullImage.getWidth() / 2, 0, fullImage.getWidth() / 2, fullImage.getHeight());
             }catch (IOException e){
                 e.printStackTrace();
             }finally {
@@ -157,8 +161,12 @@ public class GameGraphics extends JFrame {
             g.drawImage(animations[currentAction.ordinal()][aniIndex], xDelta, yDelta, 128, 80, null);// players size || The ordinal() method in Java is used to get the ordinal value (the position) of an enum constant. Each enum constant has an ordinal value that represents its position in the enum declaration, starting from zero.
             //draw Product
             for(Products product: logic.products){
-                g.drawImage(productImage, (int) product.getX(), (int) product.getY(), product.getWidth() *3, product.getHeight() * 3, null);
+                g.drawImage(product.getImage(), (int) product.getX(), (int) product.getY(), product.getWidth() *3, product.getHeight() * 3, null);
             }
         }
+        public BufferedImage[] getProductImages(){
+            return productImages;
+        }
+
     }
 }

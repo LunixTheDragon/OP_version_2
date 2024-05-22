@@ -1,13 +1,17 @@
 package entity;
 
+import java.awt.image.BufferedImage;
+
 public class Products extends Entity {
     private int damageIfBad = 1;
     private boolean productDescription = true;
+    private BufferedImage image;
 
-    public Products(float x, float y, int width, int height, boolean productDescription, int damageIfBad) {
+    public Products(float x, float y, int width, int height, boolean productDescription, int damageIfBad, BufferedImage image) {
         super(x, y, width, height);
         this.productDescription = productDescription;
         this.damageIfBad = damageIfBad;
+        this.image = image;
     }
 
     public int getPosition(){
@@ -28,5 +32,11 @@ public class Products extends Entity {
 
     public void setProductDescription(boolean productDescription) {
         this.productDescription = productDescription;
+    }
+    public void setImage (BufferedImage image){
+        this.image = image;
+    }
+    public BufferedImage getImage(){
+        return image;
     }
 }
