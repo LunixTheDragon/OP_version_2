@@ -54,9 +54,7 @@ public class GameLogic {
     }
 
     public void spawnInitialProducts() {
-        for (int i = 0; i < 5; i++) {
             spawnProduct();
-        }
     }
 
     public void stopMoving() {
@@ -86,7 +84,7 @@ public class GameLogic {
         for (int i = 0; i < products.size(); i++) {
             Products product = products.get(i);
             product.setY(product.getY() + 2); //falling speed
-            if (product.getPosition() >= 485) {   // they dont have exact right sizes like player so it needs to be little bit more down
+            if (product.getPosition() >= 448) {   // they dont have exact right sizes like player so it needs to be slightly lower than for player
                 products.remove(i);
                 i--; // Adjust the index to account for the removed item
             }

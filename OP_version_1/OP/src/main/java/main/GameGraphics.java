@@ -117,7 +117,7 @@ public class GameGraphics extends JFrame {
             }
         }
         private void importBackroundImg(){
-            InputStream is = getClass().getResourceAsStream("/backround_first_try.png");
+            InputStream is = getClass().getResourceAsStream("/backround.photoshop.done.png");
             try {
                 backroundImage = ImageIO.read(is);
             }catch (IOException e){
@@ -157,7 +157,7 @@ public class GameGraphics extends JFrame {
             g.drawImage(animations[currentAction.ordinal()][aniIndex], xDelta, yDelta, 128, 80, null);// players size || The ordinal() method in Java is used to get the ordinal value (the position) of an enum constant. Each enum constant has an ordinal value that represents its position in the enum declaration, starting from zero.
             //draw Product
             for(Products product: logic.products){
-                g.drawImage(productImage, (int) product.getX(), (int) product.getY(), 256, 160, null);
+                g.drawImage(productImage, (int) product.getX(), (int) product.getY(), product.getWidth() *3, product.getHeight() * 3, null);
             }
         }
     }
