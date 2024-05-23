@@ -71,14 +71,7 @@ public class GameGraphics extends JFrame {
                     return 5;
                 case HIT:
                     return 4;
-                case JUMP:
-                case ATTACK_1:
-                case ATTACK_JUMP_1:
-                case ATTACK_JUMP_2:
-                    return 3;
-                case GROUND:
-                    return 2;
-                case FALLING:
+                case GOODPRODUCT:
                 default:
                     return 1; //just workin for sure
             }

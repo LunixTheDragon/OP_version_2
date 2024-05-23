@@ -72,6 +72,12 @@ public class GameLogic {
                     gg.draw.xMoving += 3;
                     break;
             }
+            //screen wrapping logic
+            if (gg.draw.xMoving < 0){
+                gg.draw.xMoving = gg.getWidth(); //If the player's x-coordinate (gg.draw.xMoving) is less than 0 , their position is set to the width of the game window
+            }else if(gg.draw.xMoving > gg.getWidth()){
+                gg.draw.xMoving = 0;
+            }
         }
     }
 
