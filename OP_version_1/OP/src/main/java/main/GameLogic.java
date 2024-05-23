@@ -5,6 +5,7 @@ import entity.Player;
 import entity.PlayerValues;
 import entity.Products;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -18,10 +19,12 @@ public class GameLogic {
     private int playerDir = -1; //IDLE
     private boolean moving = false;
     private BufferedImage goodProductImage, badProductImage;
+    private int score;
     public void initialize() {
         player = new Player(230, 441, 64, 40, 3); //where is spawn player, y = 441 exact position of ground
         products = new ArrayList<>();
         backround = new Backround(0, 0, 600, 750);
+        this.score = 0;
     }
 
     public void setGameGraphics(GameGraphics gg) {
@@ -51,11 +54,6 @@ public class GameLogic {
         }
     }
 
-    private boolean descriptionOfProduct() {
-        Random rnd = new Random();
-        return rnd.nextBoolean();
-    }
-
     public void spawnInitialProducts() {
             spawnProduct();
     }
@@ -81,6 +79,7 @@ public class GameLogic {
         setAni();
         updatePos();
         updateProducts();
+        checkCollisions();
         if (products.isEmpty()){
             spawnProduct(); //ensures one product is spawned at a time
         }
@@ -101,12 +100,38 @@ public class GameLogic {
 
     private void spawnProduct() {
         Random rnd = new Random();
-        float x = rnd.nextInt(gg.getWidth() - 64);//width of product dont forget to change it in GameGraphics
+        float x = rnd.nextInt(gg.getWidth() - 64);//generates random integer between 0 and the width of the game window minus 64 (the width of the product). the product spawns within the game window horizontally. (random x position)
         float y = 0;
-        boolean isGood = rnd.nextBoolean();
-        BufferedImage productImage = isGood ? goodProductImage : badProductImage;
+        boolean isGood = rnd.nextBoolean(); //randomizing product type
+        BufferedImage productImage = isGood ? goodProductImage : badProductImage; //he ternary operator ? :If isGood is true, productImage is set to goodProductImage.If isGood is false, productImage is set to badProductImage.it is short if
         int width = isGood ? 35 : 37;
-        int height = isGood ? 36 : 30;
-        products.add(new Products(x, y, width, height, isGood, isGood ? 0 : 1, productImage));
+        int height = isGood ? 36 : 30; //same thing here used just bcs the sizes of products
+        products.add(new Products(x, y, width, height, isGood, isGood ? 0 : 1, productImage)); //here it indicates the damage if good, damage == 0 if bad, damage == 1
+    }
+
+    private void checkCollisions(){
+        for (int i = 0; i < products.size(); i++){
+            Products product = products.get(i);
+            if(isCollided(player, product)){
+                System.out.println("Collisioon");
+                if (product.getProductDescription()){
+                    score ++;
+                }else{
+                    player.decreaseLives();
+                    score --;
+                }
+                products.remove(i);
+                i--;
+                spawnProduct();
+            }
+        }
+    }
+    private boolean isCollided(Player player, Products product){
+        Rectangle playerBox = player.getCollisionBounds();
+        Rectangle productBox = product.getCollisionBounds();
+        return playerBox.intersects(productBox);
+    }
+    public int getScore (){
+        return score;
     }
 }

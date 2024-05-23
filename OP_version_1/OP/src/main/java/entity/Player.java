@@ -1,6 +1,8 @@
 package entity;
 
 
+import java.awt.*;
+
 public class Player extends Entity {
     private int lives;
     private PlayerValues currentAction;
@@ -19,5 +21,12 @@ public class Player extends Entity {
     public int getLives(){
         return lives;
     }
-
+    public void decreaseLives(){
+        if (this.lives > 0){
+            lives--;
+        }
+    }
+    public Rectangle getCollisionBounds(){
+        return new Rectangle((int)x , (int)y , width , height );
+    }
 }

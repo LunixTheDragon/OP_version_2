@@ -116,9 +116,6 @@ public class GameGraphics extends JFrame {
         public void importHealthBarImage(){
             InputStream is = getClass().getResourceAsStream("/hearth.photoshop.done.png");
             try {
-                if (is == null) {
-                    throw new IOException("Resource not found: /hearth.photoshop.done.png");
-                }
                 healthBarImage = ImageIO.read(is);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -167,17 +164,24 @@ public class GameGraphics extends JFrame {
             updateAniTick();
             //draw Backround
             g.drawImage(backroundImage, 0,0, this.getWidth(), this.getHeight(), null);
+
             //draw HealthBar
             int healthBarWidth = 96;  // 3 hearts * 32 pixels each
             int healthBarHeight = 32; // height of one heart
             int healthBarX = this.getWidth() - (healthBarWidth + 20); // 20 pixels padding from right
             int healthBarY = 20; // 20 pixels padding from top
-
             g.drawImage(healthBarImage, healthBarX, healthBarY, healthBarWidth, healthBarHeight, null);
+
+            //draw Score
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Arial", Font.BOLD, 40));
+            g.drawString("Score: " + logic.getScore(), 225, 650);
+
             //draw Player
             PlayerValues currentAction = logic.player.getAction();
             spriteAm = getSpriteAmount(currentAction);
             g.drawImage(animations[currentAction.ordinal()][aniIndex], xMoving, yMoving, 128, 80, null);// players size || The ordinal() method in Java is used to get the ordinal value (the position) of an enum constant. Each enum constant has an ordinal value that represents its position in the enum declaration, starting from zero.
+
             //draw Product
             for(Products product: logic.products){
                 g.drawImage(product.getImage(), (int) product.getX(), (int) product.getY(), product.getWidth(), product.getHeight(), null);

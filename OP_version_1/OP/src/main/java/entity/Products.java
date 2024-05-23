@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Products extends Entity {
@@ -38,5 +39,8 @@ public class Products extends Entity {
     }
     public BufferedImage getImage(){
         return image;
+    }
+    public Rectangle getCollisionBounds(){
+        return new Rectangle((int)x , (int)y , width , height );
     }
 }
