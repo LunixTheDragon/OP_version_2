@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Products extends Entity {
     private int damageIfBad = 1;
-    private boolean productDescription = true;
+    private boolean productDescription; //we do not need to write = true bcs now is
     private BufferedImage image;
 
     public Products(float x, float y, int width, int height, boolean productDescription, int damageIfBad, BufferedImage image) {
@@ -26,7 +26,7 @@ public class Products extends Entity {
         this.damageIfBad = damageIfBad;
     }
 
-    public boolean isProductDescription() {
+    public boolean getProductDescription() {
         return productDescription;
     }
 

@@ -16,5 +16,8 @@ public class Player extends Entity {
     public PlayerValues getAction(){
         return currentAction;
     }
+    public int getLives(){
+        return lives;
+    }
 
 }

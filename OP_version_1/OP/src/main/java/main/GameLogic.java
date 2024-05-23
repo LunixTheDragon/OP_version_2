@@ -17,8 +17,7 @@ public class GameLogic {
     GameGraphics gg;
     private int playerDir = -1; //IDLE
     private boolean moving = false;
-    private BufferedImage[] productImages;
-
+    private BufferedImage goodProductImage, badProductImage;
     public void initialize() {
         player = new Player(230, 441, 64, 40, 3); //where is spawn player, y = 441 exact position of ground
         products = new ArrayList<>();
@@ -27,7 +26,8 @@ public class GameLogic {
 
     public void setGameGraphics(GameGraphics gg) {
         this.gg = gg;
-        this.productImages = gg.draw.getProductImages();
+        this.goodProductImage = gg.draw.getGoodProductImage();
+        this.badProductImage = gg.draw.getBadProductImage();
     }
 
     public void updatePlayerAction(PlayerValues action) {
@@ -68,10 +68,10 @@ public class GameLogic {
         if (this.moving) {
             switch (this.playerDir) {
                 case KeyEvent.VK_A, KeyEvent.VK_LEFT:
-                    gg.draw.xDelta -= 3; //Players speed
+                    gg.draw.xMoving -= 3; //Players speed
                     break;
                 case KeyEvent.VK_D, KeyEvent.VK_RIGHT:
-                    gg.draw.xDelta += 3;
+                    gg.draw.xMoving += 3;
                     break;
             }
         }
@@ -94,6 +94,7 @@ public class GameLogic {
                 product.setY(448);
                 products.remove(i);
                 i--; // Adjust the index to account for the removed item
+                spawnProduct();
             }
         }
     }
@@ -102,8 +103,10 @@ public class GameLogic {
         Random rnd = new Random();
         float x = rnd.nextInt(gg.getWidth() - 64);//width of product dont forget to change it in GameGraphics
         float y = 0;
-        boolean isGood = descriptionOfProduct();
-        BufferedImage productImage = productImages[rnd.nextInt(productImages.length)]; // randomly select productImage
-        products.add(new Products(x, y, 64, 80, isGood, isGood ? 0 : 1, productImage));
+        boolean isGood = rnd.nextBoolean();
+        BufferedImage productImage = isGood ? goodProductImage : badProductImage;
+        int width = isGood ? 35 : 37;
+        int height = isGood ? 36 : 30;
+        products.add(new Products(x, y, width, height, isGood, isGood ? 0 : 1, productImage));
     }
 }
