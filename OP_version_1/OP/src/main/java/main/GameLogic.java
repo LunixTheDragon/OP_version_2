@@ -22,11 +22,16 @@ public class GameLogic {
     private BufferedImage goodProductImage, badProductImage;
     private int score;
     private boolean isGameOver = false;
+    private long gameTime;
+    private long lastSpawnTime;
+
     public void initialize() {
         player = new Player(230, 441, 64, 40, 3); //where is spawn player, y = 441 exact position of ground
         products = new ArrayList<>();
         backround = new Backround(0, 0, 600, 750);
         this.score = 0;
+        this.gameTime = 0;
+        this.lastSpawnTime = System.currentTimeMillis();
     }
 
     public void setGameGraphics(GameGraphics gg) {
@@ -97,6 +102,7 @@ public class GameLogic {
             updatePos();
             updateProducts();
             checkCollisions();
+            gameTime += 1;
             if (products.isEmpty()) {
                 spawnProduct(); //ensures one product is spawned at a time
             }
@@ -104,9 +110,10 @@ public class GameLogic {
     }
 
     private void updateProducts() {
+        int fallingSpeed = getFallingSpeed();
         for (int i = 0; i < products.size(); i++) {
             Products product = products.get(i);
-            product.setY(product.getY() + 2); //falling speed
+            product.setY(product.getY() + fallingSpeed); //falling speed
             if (product.getPosition() >= 448) {   // they dont have exact right sizes like player so it needs to be slightly lower than for player
                 product.setY(448);
                 products.remove(i);
@@ -153,5 +160,16 @@ public class GameLogic {
 
     public int getScore (){
         return score;
+    }
+    private int getSpawnInterval(){ //calculates spawn interval based on game time
+        int baseInterval = 2000;//milisecs
+        int reduction = (int) (gameTime / 500); //reduces interval as game increases
+        return Math.max(baseInterval - reduction, 500); //minimum interval 500 milis
+    }
+    private int getFallingSpeed (){
+        int baseSpeed = 2;
+        double multiplier = 0.5; //multiplier to slow down the increment
+        int increase = (int) (gameTime / 2000); //adjust speed
+        return baseSpeed + increase;
     }
 }
