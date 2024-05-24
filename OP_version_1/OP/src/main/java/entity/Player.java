@@ -24,7 +24,4 @@ public class Player extends Entity {
             lives--;
         }
     }
-    public Rectangle getCollisionBounds(){
-        return new Rectangle((int)x , (int)y , width , height );
-    }
 }

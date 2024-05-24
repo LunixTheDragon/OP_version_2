@@ -46,4 +46,7 @@ public class Entity {
     public void setWidth(int width) {
         this.width = width;
     }
+    public Rectangle getCollisionBounds(){
+        return new Rectangle((int)x , (int)y , width , height );
+    }
 }

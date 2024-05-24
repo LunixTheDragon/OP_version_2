@@ -103,6 +103,13 @@ public class GameLogic {
             updateProducts();
             checkCollisions();
             gameTime += 1;
+            /*
+             // Check if it's time to spawn a new product
+        if (currentTime - lastSpawnTime >= getSpawnInterval()) {
+            spawnProduct();
+            lastSpawnTime = currentTime;  // Update last spawn time
+        } // LEVEL HARDCORE
+             */
             if (products.isEmpty()) {
                 spawnProduct(); //ensures one product is spawned at a time
             }
