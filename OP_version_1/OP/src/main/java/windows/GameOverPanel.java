@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class GameOverPanel extends JFrame {
     private BufferedImage backgroundImage;
-    public GameOverPanel(){
+    public GameOverPanel(int score){
         setTitle("Game Over");
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,13 +40,23 @@ public class GameOverPanel extends JFrame {
 
         //gm text
         JLabel gameOverText = new JLabel("GAME OVER");
-        gameOverText.setFont(new Font("Arial", Font.BOLD, 48));
+        gameOverText.setFont(new Font("ArcadeClassic", Font.BOLD, 48));
         gameOverText.setForeground(Color.RED);
         g.gridx = 0;
         g.gridy = 0;
         g.gridwidth = 2;
         g.insets = new Insets(20, 20, 20, 20);
         panel.add(gameOverText, g);
+
+        JLabel scoreEndText = new JLabel("Score: " + score);
+        scoreEndText.setFont(new Font("Arial", Font.BOLD, 30));
+        scoreEndText.setForeground(Color.WHITE);  // Make the text color white for visibility
+        g.gridx = 0;
+        g.gridy = 3;
+        g.gridwidth = 2;
+        g.insets = new Insets(20, 10, 10, 25);
+        panel.add(scoreEndText, g);
+
 
         JButton restartButton = new JButton("Restart");
         g.gridy = 1;

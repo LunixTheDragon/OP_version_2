@@ -93,7 +93,7 @@ public class GameLogic {
     public void update() {
         if (player.getLives() <= 0 && !isGameOver){
             isGameOver = true;
-            new GameOverPanel().setVisible(true);
+            new GameOverPanel(score).setVisible(true);
             gg.dispose();
             return;
         }
@@ -169,7 +169,7 @@ public class GameLogic {
     private int getFallingSpeed (){
         int baseSpeed = 2;
         double multiplier = 0.5; //multiplier to slow down the increment
-        int increase = (int) (gameTime / 2000); //adjust speed
+        int increase = (int) (gameTime / 2500); //adjust speed
         return baseSpeed + increase;
     }
 }
