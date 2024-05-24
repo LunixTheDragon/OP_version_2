@@ -37,7 +37,6 @@ public class GameGraphics extends JFrame {
         });
     }
 
-
     public static class Draw extends JPanel{
         private final GameLogic logic;
         private BufferedImage[][] animations;
@@ -159,11 +158,13 @@ public class GameGraphics extends JFrame {
             g.drawImage(backroundImage, 0,0, this.getWidth(), this.getHeight(), null);
 
             //draw HealthBar
-            int healthBarWidth = 96;  // 3 hearts * 32 pixels each
+            int healthBarWidth = 32 * logic.player.getLives();  // 3 hearts * 32 pixels each
             int healthBarHeight = 32; // height of one heart
             int healthBarX = this.getWidth() - (healthBarWidth + 20); // 20 pixels padding from right
             int healthBarY = 20; // 20 pixels padding from top
-            g.drawImage(healthBarImage, healthBarX, healthBarY, healthBarWidth, healthBarHeight, null);
+            for (int i = 0; i < logic.player.getLives(); i++){
+                g.drawImage(healthBarImage, healthBarX + i * 32, healthBarY, 32, 32,null);
+            }
 
             //draw Score
             g.setColor(Color.WHITE);

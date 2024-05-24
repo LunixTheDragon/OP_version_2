@@ -1,6 +1,4 @@
 package entity;
-
-
 import java.awt.*;
 
 public class Player extends Entity {

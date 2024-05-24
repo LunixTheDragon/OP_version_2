@@ -4,6 +4,7 @@ import entity.Backround;
 import entity.Player;
 import entity.PlayerValues;
 import entity.Products;
+import windows.GameOverPanel;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -20,6 +21,7 @@ public class GameLogic {
     private boolean moving = false;
     private BufferedImage goodProductImage, badProductImage;
     private int score;
+    private boolean isGameOver = false;
     public void initialize() {
         player = new Player(230, 441, 64, 40, 3); //where is spawn player, y = 441 exact position of ground
         products = new ArrayList<>();
@@ -66,28 +68,38 @@ public class GameLogic {
         if (this.moving) {
             switch (this.playerDir) {
                 case KeyEvent.VK_A, KeyEvent.VK_LEFT:
-                    gg.draw.xMoving -= 3; //Players speed
+                    player.setX(player.getX() - 3); //Players speed
                     break;
                 case KeyEvent.VK_D, KeyEvent.VK_RIGHT:
-                    gg.draw.xMoving += 3;
+                    player.setX(player.getX() + 3);
                     break;
             }
             //screen wrapping logic
-            if (gg.draw.xMoving < 0){
-                gg.draw.xMoving = gg.getWidth(); //If the player's x-coordinate (gg.draw.xMoving) is less than 0 , their position is set to the width of the game window
-            }else if(gg.draw.xMoving > gg.getWidth()){
-                gg.draw.xMoving = 0;
+            if (player.getX() < 0){
+                player.setX(gg.getWidth()); //If the player's x-coordinate (gg.draw.xMoving) is less than 0 , their position is set to the width of the game window
+            }else if(player.getX() > gg.getWidth()){
+                player.setX(0);
             }
+            //reflects updated x position in gg
+            gg.draw.xMoving = (int) player.getX();
         }
     }
 
     public void update() {
-        setAni();
-        updatePos();
-        updateProducts();
-        checkCollisions();
-        if (products.isEmpty()){
-            spawnProduct(); //ensures one product is spawned at a time
+        if (player.getLives() <= 0 && !isGameOver){
+            isGameOver = true;
+            new GameOverPanel().setVisible(true);
+            gg.dispose();
+            return;
+        }
+        if (!isGameOver) {
+            setAni();
+            updatePos();
+            updateProducts();
+            checkCollisions();
+            if (products.isEmpty()) {
+                spawnProduct(); //ensures one product is spawned at a time
+            }
         }
     }
 
@@ -132,11 +144,13 @@ public class GameLogic {
             }
         }
     }
+
     private boolean isCollided(Player player, Products product){
         Rectangle playerBox = player.getCollisionBounds();
         Rectangle productBox = product.getCollisionBounds();
         return playerBox.intersects(productBox);
     }
+
     public int getScore (){
         return score;
     }
