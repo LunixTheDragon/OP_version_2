@@ -40,7 +40,7 @@ public class GameGraphics extends JFrame {
     public static class Draw extends JPanel{
         private final GameLogic logic;
         private BufferedImage[][] animations;
-        private int aniTick, aniIndex, aniSpeed = 20; //120fpsa /4frames in second == 30
+        private int aniTick, aniIndex, aniSpeed = 20;
         public int xMoving, yMoving;
         private BufferedImage playerImg, backroundImage;
         private BufferedImage goodProductImage, badProductImage;
@@ -51,7 +51,7 @@ public class GameGraphics extends JFrame {
             this.logic = logic;
             xMoving = (int) logic.player.getX();
             yMoving = (int) logic.player.getY();//for the initial spawn point
-            importBackroundImg();
+            importBackgroundImg();
             importHealthBarImage();
             importPlayerImg();
             importProductImages();
@@ -121,7 +121,7 @@ public class GameGraphics extends JFrame {
                 }
             }
         }
-        private void importBackroundImg(){
+        private void importBackgroundImg(){
             InputStream is = getClass().getResourceAsStream("/backround.photoshop.done.png");
             try {
                 backroundImage = ImageIO.read(is);
@@ -154,7 +154,7 @@ public class GameGraphics extends JFrame {
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
             updateAniTick();
-            //draw Backround
+            //draw Background
             g.drawImage(backroundImage, 0,0, this.getWidth(), this.getHeight(), null);
 
             //draw HealthBar
