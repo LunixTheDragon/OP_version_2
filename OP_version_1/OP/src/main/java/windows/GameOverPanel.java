@@ -12,7 +12,9 @@ import java.io.IOException;
 
 public class GameOverPanel extends JFrame {
     private BufferedImage backgroundImage;
-    public GameOverPanel(int score){
+    private int level;
+    public GameOverPanel(int score, int level){
+        this.level = level;
         setTitle("Game Over");
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -65,7 +67,7 @@ public class GameOverPanel extends JFrame {
         restartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Game().startGame();
+                new Game(level).startGame();
                 dispose();
             }
         });

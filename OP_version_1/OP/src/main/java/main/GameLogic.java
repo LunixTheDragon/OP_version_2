@@ -24,9 +24,14 @@ public class GameLogic {
     private boolean isGameOver = false;
     private long gameTime;
     private long lastSpawnTime;
+    private int level;
+    public GameLogic(int level){
+        this.level = level;
+    }
 
     public void initialize() {
-        player = new Player(230, 441, 64, 40, 3); //where is spawn player, y = 441 exact position of ground
+        int initialLives = level == 3 ? 5 : 3;
+        player = new Player(230, 441, 64, 40,  initialLives); //where is spawn player, y = 441 exact position of ground
         products = new ArrayList<>();
         backround = new Backround(0, 0, 600, 750);
         this.score = 0;
@@ -91,9 +96,10 @@ public class GameLogic {
     }
 
     public void update() {
+        long currentTime = System.currentTimeMillis();
         if (player.getLives() <= 0 && !isGameOver){
             isGameOver = true;
-            new GameOverPanel(score).setVisible(true);
+            new GameOverPanel(score, level).setVisible(true);
             gg.dispose();
             return;
         }
@@ -103,13 +109,14 @@ public class GameLogic {
             updateProducts();
             checkCollisions();
             gameTime += 1;
-            /*
-             // Check if it's time to spawn a new product
-        if (currentTime - lastSpawnTime >= getSpawnInterval()) {
-            spawnProduct();
-            lastSpawnTime = currentTime;  // Update last spawn time
-        } // LEVEL HARDCORE
-             */
+
+            if (level == 3) {
+                // Check if it's time to spawn a new product
+                if (currentTime - lastSpawnTime >= getSpawnInterval()) {
+                    spawnProduct();
+                    lastSpawnTime = currentTime;  // Update last spawn time
+                } // LEVEL HARDCORE
+            }
             if (products.isEmpty()) {
                 spawnProduct(); //ensures one product is spawned at a time
             }
@@ -150,7 +157,6 @@ public class GameLogic {
                     score ++;
                 }else{
                     player.decreaseLives();
-                    score --;
                 }
                 products.remove(i);
                 i--;
@@ -169,12 +175,12 @@ public class GameLogic {
         return score;
     }
     private int getSpawnInterval(){ //calculates spawn interval based on game time
-        int baseInterval = 2000;//milisecs
+        int baseInterval = level == 3 ? 500 : 2000;//milisecs
         int reduction = (int) (gameTime / 500); //reduces interval as game increases
         return Math.max(baseInterval - reduction, 500); //minimum interval 500 milis
     }
     private int getFallingSpeed (){
-        int baseSpeed = 2;
+        int baseSpeed = level == 3 ? 5 : (level == 2 ? 4 : 2);
         double multiplier = 0.5; //multiplier to slow down the increment
         int increase = (int) (gameTime / 2500); //adjust speed
         return baseSpeed + increase;

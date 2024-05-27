@@ -10,10 +10,10 @@ public class Game implements Runnable{
     GameGraphics gg;
     private Thread gameThread;
     private final int FPS = 120;
-    public Game(){
-        logic = new GameLogic();
+    public Game(int level){
+        logic = new GameLogic(level);
         logic.initialize(); //GameLogic must be iniciliazed before GameGraphics for player to not to be null
-        gg = new GameGraphics(logic);
+        gg = new GameGraphics(logic, level);
         logic.setGameGraphics(gg);
         logic.spawnInitialProducts();
 

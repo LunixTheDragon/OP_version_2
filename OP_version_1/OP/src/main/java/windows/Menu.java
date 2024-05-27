@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 
 public class Menu extends JFrame {
     private JButton startButton;
+    private JButton levelTwoButton;
+    private JButton hardcoreLevelButton;
     public Menu (){
         setTitle("Game Menu");
         setSize(500, 500);
@@ -21,11 +23,30 @@ public class Menu extends JFrame {
         bacroundMenuPanel.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
 
-        startButton = new JButton("Start Game");
+        startButton = new JButton("Level 1");
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Game game = new Game();
+                Game game = new Game(1);
+                game.startGame();
+                dispose();
+            }
+        });
+        levelTwoButton = new JButton("Level 2");
+        levelTwoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Game game= new Game(2);
+                game.startGame();
+                dispose();
+            }
+        });
+
+        hardcoreLevelButton = new JButton("Level HARDCORE");
+        hardcoreLevelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Game game = new Game(3);
                 game.startGame();
                 dispose();
             }
@@ -36,6 +57,13 @@ public class Menu extends JFrame {
         g.insets = new Insets(10, 10, 10, 10);
         g.fill = GridBagConstraints.NONE;
         bacroundMenuPanel.add(startButton, g);
+
+        g.gridy = 1;
+        bacroundMenuPanel.add(levelTwoButton, g);
+
+        g.gridy = 2;
+        bacroundMenuPanel.add(hardcoreLevelButton, g);
+
         add(bacroundMenuPanel, BorderLayout.CENTER);
     }
 

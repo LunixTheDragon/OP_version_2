@@ -14,8 +14,10 @@ import java.io.InputStream;
 
 public class GameGraphics extends JFrame {
     public Draw draw;
-    public GameGraphics(GameLogic logic){
-        this.draw = new Draw(logic);
+    private int level;
+    public GameGraphics(GameLogic logic, int level){
+        this.level = level;
+        this.draw = new Draw(logic, level);
         logic.setGameGraphics(this);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); //Exit on close
         setResizable(false);
@@ -46,8 +48,10 @@ public class GameGraphics extends JFrame {
         private BufferedImage goodProductImage, badProductImage;
         private BufferedImage healthBarImage;
         private int spriteAm = getSpriteAmount(PlayerValues.IDLE);
+        private int level;
 
-        public Draw (GameLogic logic){
+        public Draw (GameLogic logic, int level){
+            this.level = level;
             this.logic = logic;
             xMoving = (int) logic.player.getX();
             yMoving = (int) logic.player.getY();//for the initial spawn point
@@ -122,7 +126,12 @@ public class GameGraphics extends JFrame {
             }
         }
         private void importBackgroundImg(){
-            InputStream is = getClass().getResourceAsStream("/backround.photoshop.done.png");
+            String backgroundFile = switch (level) {
+                case 2 -> "/backgroundLevelTwo.done.png";
+                case 3 -> "/hellLevel.done.png";
+                default -> "/backround.photoshop.done.png";
+            };
+            InputStream is = getClass().getResourceAsStream(backgroundFile);
             try {
                 backroundImage = ImageIO.read(is);
             }catch (IOException e){
