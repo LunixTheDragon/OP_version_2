@@ -84,6 +84,7 @@ public class GameLogic {
                     player.setX(player.getX() + 3);
                     break;
             }
+
             //screen wrapping logic
             if (player.getX() < 0){
                 player.setX(gg.getWidth()); //If the player's x-coordinate (gg.draw.xMoving) is less than 0 , their position is set to the width of the game window
@@ -103,6 +104,7 @@ public class GameLogic {
             gg.dispose();
             return;
         }
+
         if (!isGameOver) {
             setAni();
             updatePos();
@@ -117,6 +119,7 @@ public class GameLogic {
                     lastSpawnTime = currentTime;  // Update last spawn time
                 } // LEVEL HARDCORE
             }
+
             if (products.isEmpty()) {
                 spawnProduct(); //ensures one product is spawned at a time
             }
@@ -174,11 +177,13 @@ public class GameLogic {
     public int getScore (){
         return score;
     }
+
     private int getSpawnInterval(){ //calculates spawn interval based on game time
         int baseInterval = level == 3 ? 500 : 2000;//milisecs
         int reduction = (int) (gameTime / 500); //reduces interval as game increases
         return Math.max(baseInterval - reduction, 500); //minimum interval 500 milis
     }
+
     private int getFallingSpeed (){
         int baseSpeed = level == 3 ? 5 : (level == 2 ? 4 : 2);
         double multiplier = 0.5; //multiplier to slow down the increment

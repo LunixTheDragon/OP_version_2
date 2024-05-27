@@ -11,6 +11,7 @@ public class Menu extends JFrame {
     private JButton startButton;
     private JButton levelTwoButton;
     private JButton hardcoreLevelButton;
+    private JButton helpButton;
     public Menu (){
         setTitle("Game Menu");
         setSize(500, 500);
@@ -19,8 +20,8 @@ public class Menu extends JFrame {
 
         setLayout(new BorderLayout());
 
-        BackgroundMenuPanel bacroundMenuPanel = new BackgroundMenuPanel("/pozadi.napad.png");
-        bacroundMenuPanel.setLayout(new GridBagLayout());
+        BackgroundMenuPanel backgroundMenuPanel = new BackgroundMenuPanel("/pozadi.napad.png");
+        backgroundMenuPanel.setLayout(new GridBagLayout());
         GridBagConstraints g = new GridBagConstraints();
 
         startButton = new JButton("Level 1");
@@ -52,19 +53,31 @@ public class Menu extends JFrame {
             }
         });
 
+        helpButton = new JButton("Help");
+        helpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new HelpPanel().setVisible(true);
+                dispose();
+            }
+        });
+
         g.gridx = 0;
         g.gridy = 0;
         g.insets = new Insets(10, 10, 10, 10);
         g.fill = GridBagConstraints.NONE;
-        bacroundMenuPanel.add(startButton, g);
+        backgroundMenuPanel.add(startButton, g);
 
         g.gridy = 1;
-        bacroundMenuPanel.add(levelTwoButton, g);
+        backgroundMenuPanel.add(levelTwoButton, g);
 
         g.gridy = 2;
-        bacroundMenuPanel.add(hardcoreLevelButton, g);
+        backgroundMenuPanel.add(hardcoreLevelButton, g);
 
-        add(bacroundMenuPanel, BorderLayout.CENTER);
+        g.gridy = 3;
+        backgroundMenuPanel.add(helpButton, g);
+
+        add(backgroundMenuPanel, BorderLayout.CENTER);
     }
 
     public static void main(String[] args) {
