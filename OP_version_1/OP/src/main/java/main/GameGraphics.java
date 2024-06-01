@@ -25,7 +25,7 @@ public class GameGraphics extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-        setTitle("PribiňáčekGame");
+        setTitle("PRIBIGAME");
         addWindowFocusListener(new WindowFocusListener() { //if we lose focus on the window we are still moving so this will prevent the unnecessary movement
             @Override
             public void windowGainedFocus(WindowEvent e) { //if we are in window

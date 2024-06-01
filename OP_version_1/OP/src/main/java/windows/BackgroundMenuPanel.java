@@ -5,12 +5,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class BackgroundMenuPanel extends JPanel {
     private BufferedImage backgroundMenuImage;
     public BackgroundMenuPanel(String fileName){
         try {
-            backgroundMenuImage = ImageIO.read(getClass().getResourceAsStream(fileName));
+            backgroundMenuImage = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(fileName)));
         }catch (IOException e){
             e.printStackTrace();
         }
